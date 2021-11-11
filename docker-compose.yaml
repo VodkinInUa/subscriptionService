@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+
+  rabbitMQ:
+    image: rabbitmq:3.9-management
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  subscription_db:
+    image: mysql:8.0.26
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "subscription_db"
+      MYSQL_USER: "subscription_user"
+      MYSQL_PASSWORD: "qwvuscE4dT5XkZwT"
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - ../inrastructure/subscription_mysql:/var/lib/mysql
+    security_opt:
+      - seccomp:unconfined
+
+volumes:
+  subscription_mysql:
