@@ -13,17 +13,15 @@ import java.util.Random;
 public class Runner implements CommandLineRunner {
     private final RabbitTemplate rabbitTemplate;
 
-    public Runner(Receiver receiver, RabbitTemplate rabbitTemplate) {
+    public Runner(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
     @Override
     public void run(String... args) throws Exception {
         for (int i=0; i<10; i++){
-            System.out.println("Sending message...");
             Random random = new Random();
             String payload = this.subscribeInJson(edrpous[i],themes[random.nextInt(themes.length)]);
-//            String payload = this.subscribeInJson(edrpous[i],themes[1]);
             Message<String> eventMessage = MessageBuilder
                     .withPayload(payload)
                     .setHeader("Subscriber", "1234567890")
