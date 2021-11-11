@@ -1,6 +1,9 @@
 package ua.gov.openpublicfinance.subscriptionservice.infrastructure.services.rabbitMq;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -11,9 +14,8 @@ import java.time.Instant;
 
 @Component
 public class RabbitMqPublisher implements ApplicationListener<NotificationEvent> {
-
+    private final Logger logger = LoggerFactory.getLogger(ApplicationEventPublisher.class);
     private final RabbitTemplate rabbitTemplate;
-
     public RabbitMqPublisher(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
@@ -21,7 +23,10 @@ public class RabbitMqPublisher implements ApplicationListener<NotificationEvent>
     @Override
     public void onApplicationEvent(NotificationEvent event) {
         Message<String> message = this.messageFromEvent(event);
-        rabbitTemplate.convertAndSend("tg.bot.notification","tg.notification",message);
+        String exchange = "tg.bot.notification";
+        String routingKey = "tg.notification";
+        rabbitTemplate.convertAndSend(exchange,routingKey,message);
+        logger.info("Send message to exchange \"" + exchange + "\" and routingKey \"" + routingKey + "\" with payload \"" + message.getPayload() + "\"");
     }
 
     private Message<String> messageFromEvent(NotificationEvent event){

@@ -2,6 +2,8 @@ package ua.gov.openpublicfinance.subscriptionservice.infrastructure.services.rab
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.messaging.Message;
@@ -16,6 +18,7 @@ import ua.gov.openpublicfinance.subscriptionservice.infrastructure.services.rabb
 public class RabbitMqConsumer {
 
     private final ApplicationEventPublisher applicationEventPublisher;
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationEventPublisher.class);
 
     public RabbitMqConsumer(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
@@ -24,11 +27,8 @@ public class RabbitMqConsumer {
     @RabbitListener(queues = "subscribe")
     public void receiveMessageFromSubscribe (Message<String> message) {
         String payload = message.getPayload();
+        logger.info("Received from queues 'subscribe':" + payload);
         SubscribeMessage command = subscribeCommandFromPayload(payload);
-        System.out.println("==========================");
-        System.out.println("Received from queues 'subscribe':");
-        System.out.println(command.toString());
-        System.out.println("==========================");
         NewSubscriptionReceivedEvent event = new NewSubscriptionReceivedEvent(this,command);
         applicationEventPublisher.publishEvent(event);
 
@@ -36,10 +36,8 @@ public class RabbitMqConsumer {
     @RabbitListener(queues = "unsubscribe")
     public void receiveMessageFromUnsubscribe(Message<String> message) {
         String payload = message.getPayload();
+        logger.info("Received from queues 'unsubscribe':" + payload);
         UnsubscribeMessage command = unsubscribeCommandFromPayload(payload);
-        System.out.println("==========================");
-        System.out.println("Received from queues 'unsubscribe' <" + payload + ">");
-        System.out.println("==========================");
         UnsubscribeEvent event = new UnsubscribeEvent(this,command);
         applicationEventPublisher.publishEvent(event);
     }

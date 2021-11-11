@@ -3,12 +3,14 @@ package ua.gov.openpublicfinance.subscriptionservice.application;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TransactionsResponseMapper implements ResponseMapper {
-
+    private final Logger logger = LoggerFactory.getLogger(TransactionsResponseMapper.class);
     private String theme;
 
     public TransactionsResponseMapper() {
@@ -25,7 +27,7 @@ public class TransactionsResponseMapper implements ResponseMapper {
             data = mapper.readValue(json, typeReference);
         } catch (JsonProcessingException e)
         {
-            System.err.println(e);
+            logger.error("Cant`t map json \""+json+"\"",e);
             //TODO process exception json desirialisation
         }
         return (HashMap<String, String>) data.get("response");

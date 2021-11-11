@@ -1,5 +1,7 @@
 package ua.gov.openpublicfinance.subscriptionservice.application;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SubscriptionsCheck {
-
+    private final Logger logger = LoggerFactory.getLogger(SubscriptionsCheck.class);
     final private SubscriptionRepository repository;
     final private ApplicationEventPublisher applicationEventPublisher;
 
@@ -71,7 +73,7 @@ public class SubscriptionsCheck {
     private void notifyIfNecessary(String lastCheckResult, String result, Subscription subscription) {
         NotificationRules rule = new NotificationRules(lastCheckResult,result,subscription);
         if ( rule.notificationNecessary() ){
-            System.out.println("Notification necessary …");
+            logger.info("Notification necessary");
             NotificationEvent notification = new NotificationEvent(this, subscription, result);
             applicationEventPublisher.publishEvent(notification);
         }

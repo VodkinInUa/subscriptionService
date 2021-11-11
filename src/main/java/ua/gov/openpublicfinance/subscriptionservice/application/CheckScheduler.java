@@ -1,5 +1,7 @@
 package ua.gov.openpublicfinance.subscriptionservice.application;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,9 @@ import ua.gov.openpublicfinance.subscriptionservice.infrastructure.repositories.
 @Service
 @EnableScheduling
 public class CheckScheduler {
-
+    private final Logger logger = LoggerFactory.getLogger(CheckScheduler.class);
     private final SubscriptionRepository repository;
     private final ApplicationEventPublisher applicationEventPublisher;
-
     final private String BASE_URL = "http://chat-bot.openbudget.gov.ua";
 
     public CheckScheduler(SubscriptionRepository repository, ApplicationEventPublisher applicationEventPublisher) {
@@ -28,7 +29,7 @@ public class CheckScheduler {
 
     @Scheduled(cron = "1/30 * * * * ?",zone="Europe/Kiev")
     public void checkStates(){
-        System.out.println("Starting 'checkInfo' …");
+        logger.info("Starting check for theme \"state\" …");
         String uri = "/spending/disposer/states";
         SubscriptionsCheck subscriptions = new SubscriptionsCheck(repository, applicationEventPublisher, StateResponseMapper.class);
         ApiRequest requestBody = subscriptions.getRequestForCheck();
@@ -38,25 +39,21 @@ public class CheckScheduler {
 
     @Scheduled(cron = "1/30 * * * * ?",zone="Europe/Kiev")
     public void checkDocuments(){
-        System.out.println("Starting 'checkInfo' …");
+        logger.info("Starting check for theme \"documents\" …");
         String uri = "/spending/statistic/documents/";
         SubscriptionsCheck subscriptions = new SubscriptionsCheck(repository, applicationEventPublisher,DocumentsResponseMapper.class);
         ApiRequest requestBody = subscriptions.getRequestForCheck();
         String response = this.consumeApi(requestBody,uri);
-        System.out.println("Response from '/spending/statistic/documents/'");
-        System.out.println(response);
         subscriptions.processResponse(response);
     }
 
     @Scheduled(cron = "1/30 * * * * ?",zone="Europe/Kiev")
     public void checkTransactions(){
-        System.out.println("Starting 'checkInfo' …");
+        logger.info("Starting check for theme \"transactions\" …");
         String uri = "/spending/statistic/transactions/";
         SubscriptionsCheck subscriptions = new SubscriptionsCheck(repository, applicationEventPublisher,TransactionsResponseMapper.class);
         ApiRequest requestBody = subscriptions.getRequestForCheck();
         String response = this.consumeApi(requestBody,uri);
-        System.out.println("Response from '/spending/statistic/transactions/'");
-        System.out.println(response);
         subscriptions.processResponse(response);
     }
 
@@ -81,14 +78,12 @@ public class CheckScheduler {
             this.handleError(e);
         }
 
-
-        System.out.println("Response from "+uri+" :");
-        System.out.println(infoResponse);
+        logger.info("Response from "+uri+" \""+infoResponse+"\" ");
         return infoResponse;
     }
 
     private void handleError(Throwable error){
-        System.err.println(error);
+        logger.error("Error consuming api",error);
         //TODO process exception api consume
     }
 }

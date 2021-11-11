@@ -4,12 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DocumentsResponseMapper implements ResponseMapper{
+    private final Logger logger = LoggerFactory.getLogger(DocumentsResponseMapper.class);
     private String theme;
 
     public DocumentsResponseMapper() {
@@ -26,7 +29,7 @@ public class DocumentsResponseMapper implements ResponseMapper{
             data = mapper.readValue(json, typeReference);
         } catch (JsonProcessingException e)
         {
-            System.err.println(e);
+            logger.error("Cant`t map json \""+json+"\"",e);
             //TODO process exception json desirialisation
         }
 
@@ -37,9 +40,8 @@ public class DocumentsResponseMapper implements ResponseMapper{
             try{
                 itemJson = mapper.writeValueAsString(value);
             } catch (JsonProcessingException e) {
-                System.err.println(e);
+                logger.error("Cant`t map itemJson \""+itemJson+"\"",e);
             }
-            System.out.println(key + " -> "+ itemJson);
             responseItems.put(key, itemJson);
         } );
 
