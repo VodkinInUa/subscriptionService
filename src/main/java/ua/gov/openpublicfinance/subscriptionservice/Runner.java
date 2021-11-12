@@ -7,7 +7,6 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
-import java.util.Random;
 
 
 @Component
@@ -19,7 +18,7 @@ public class Runner implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         TestPayload testPayload = new TestPayload();
         Iterator<String> iterator = testPayload.iterator();

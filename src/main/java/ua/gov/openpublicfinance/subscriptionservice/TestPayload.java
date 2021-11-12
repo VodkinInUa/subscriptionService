@@ -5,13 +5,13 @@ import java.util.Random;
 
 public class TestPayload {
 
-    private String[] themes = {
+    final private String[] themes = {
             "states",
             "documents",
             "transactions"
     };
 
-    private String[] edrpous = {
+    final private String[] edrpous = {
             "00034022",
             "00032684",
             "00032684",
@@ -35,7 +35,7 @@ public class TestPayload {
 
 
     public Iterator<String> iterator() {
-        Iterator<String> iterator = new Iterator<String>() {
+        return new Iterator<>() {
             private int currentIndex = 0;
             @Override
             public boolean hasNext() {
@@ -55,7 +55,6 @@ public class TestPayload {
                 throw new UnsupportedOperationException();
             }
         };
-        return iterator;
     }
 
     private String withRandomTheme(int index) {
@@ -63,31 +62,15 @@ public class TestPayload {
         return subscribeInJson(edrpous[index],themes[random.nextInt(themes.length)] );
     }
     private String subscribeInJson(String edropu, String theme) {
-        String json = "{\"target\": \""+edropu+"\"," +
+        return "{\"target\": \""+edropu+"\"," +
                 "\"theme\": \""+theme+"\"," +
                 "\"subscriber\": \"111111111\"," +
                 "\"subscriptionId\": \""+randInt(100000,999999)+"\"" +
                 "}";
-        return json;
     }
 
     private int randInt(int min, int max) {
-
-        // NOTE: This will (intentionally) not run as written so that folks
-        // copy-pasting have to think about how to initialize their
-        // Random instance.  Initialization of the Random instance is outside
-        // the main scope of the question, but some decent options are to have
-        // a field that is initialized once and then re-used as needed or to
-        // use ThreadLocalRandom (if using at least Java 1.7).
-        //
-        // In particular, do NOT do 'Random rand = new Random()' here or you
-        // will get not very good / not very random results.
         Random random = new Random();
-
-        // nextInt is normally exclusive of the top value,
-        // so add 1 to make it inclusive
-        int randomNum = random.nextInt((max - min) + 1) + min;
-
-        return randomNum;
+        return random.nextInt((max - min) + 1) + min;
     }
 }
