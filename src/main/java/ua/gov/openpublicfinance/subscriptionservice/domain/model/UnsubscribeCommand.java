@@ -1,10 +1,10 @@
 package ua.gov.openpublicfinance.subscriptionservice.domain.model;
 
 public class UnsubscribeCommand {
-    final private String target;
-    final private String theme;
-    final private String subscriber;
-    final private long subscriptionId;
+    private final String target;
+    private final String theme;
+    private final String subscriber;
+    private final long subscriptionId;
 
     public String getTarget() {
         return target;

@@ -6,13 +6,6 @@ public class SubscribeMessage {
     private String subscriber;
     private long subscriptionId;
 
-//    public SubscribeCommand(String target, String theme, String subscriber) {
-//        this.target = target;
-//        this.theme = theme;
-//        this.subscriber = subscriber;
-//    }
-
-
     public String getTarget() {
         return target;
     }

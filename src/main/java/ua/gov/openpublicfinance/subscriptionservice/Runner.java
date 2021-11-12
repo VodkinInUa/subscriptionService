@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
+import ua.gov.openpublicfinance.subscriptionservice.infrastructure.configuration.NotificationRabbitMqConfiguration;
 
 import java.util.Iterator;
 
@@ -28,7 +29,7 @@ public class Runner implements CommandLineRunner {
                     .withPayload(payload)
                     .setHeader("Subscriber", "1234567890")
                     .build();
-            rabbitTemplate.convertAndSend(SubscriptionServiceApplication.directExchangeName, "tg.subscribe", eventMessage);
+            rabbitTemplate.convertAndSend(NotificationRabbitMqConfiguration.subscriptionDirectExchangeName, "tg.subscribe", eventMessage);
         }
     }
 

@@ -31,11 +31,10 @@ public class RabbitMqPublisher implements ApplicationListener<NotificationEvent>
 
     private Message<String> messageFromEvent(NotificationEvent event){
         String payload = event.getPayload();
-        Message<String> eventMessage = MessageBuilder
+        return MessageBuilder
                 .withPayload(payload)
                 .setHeader("Send datetime", Instant.now().getEpochSecond())
                 .setHeader("Subscriber", event.getSubscriber())
                 .build();
-        return  eventMessage;
     }
 }

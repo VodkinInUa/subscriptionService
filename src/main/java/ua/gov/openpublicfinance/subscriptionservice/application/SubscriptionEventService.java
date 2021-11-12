@@ -1,6 +1,5 @@
 package ua.gov.openpublicfinance.subscriptionservice.application;
 
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import ua.gov.openpublicfinance.subscriptionservice.application.events.NewSubscriptionReceivedEvent;

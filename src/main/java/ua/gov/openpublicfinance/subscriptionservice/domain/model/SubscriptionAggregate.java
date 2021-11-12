@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.gov.openpublicfinance.subscriptionservice.infrastructure.repositories.SubscriptionRepository;
 
-import java.util.List;
-
 @Component
 public class SubscriptionAggregate {
     private final Logger logger = LoggerFactory.getLogger(SubscriptionAggregate.class);

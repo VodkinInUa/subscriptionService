@@ -31,7 +31,7 @@ public class Subscription {
     @Column(name = "subscription_id")
     private long subscriptionId;
 
-    public Subscription(){};
+    public Subscription(){}
 
     public Subscription(String target, String theme, String subscriber, long subscriptionId) {
         this.target = target;

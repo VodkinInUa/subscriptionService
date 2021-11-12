@@ -3,17 +3,15 @@ package ua.gov.openpublicfinance.subscriptionservice.application;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DocumentsResponseMapper implements ResponseMapper{
     private final Logger logger = LoggerFactory.getLogger(DocumentsResponseMapper.class);
-    private String theme;
+    private final String theme;
 
     public DocumentsResponseMapper() {
         theme = "documents";
@@ -23,7 +21,7 @@ public class DocumentsResponseMapper implements ResponseMapper{
     public HashMap<String,String> mapFromJson (String json){
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, Object>> typeReference =
-                new TypeReference<HashMap<String, Object>>() {};
+                new TypeReference<>() {};
         Map<String, Object> data = null;
         try {
             data = mapper.readValue(json, typeReference);
@@ -34,7 +32,7 @@ public class DocumentsResponseMapper implements ResponseMapper{
         }
 
         Map<String,Object> response = (Map<String, Object>) data.get("response");
-        HashMap<String,String> responseItems = new HashMap<String, String>();
+        HashMap<String,String> responseItems = new HashMap<>();
         response.forEach((key,value) -> {
             String itemJson = "{}";
             try{

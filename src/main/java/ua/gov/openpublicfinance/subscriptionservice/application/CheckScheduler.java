@@ -20,7 +20,7 @@ public class CheckScheduler {
     private final Logger logger = LoggerFactory.getLogger(CheckScheduler.class);
     private final SubscriptionRepository repository;
     private final ApplicationEventPublisher applicationEventPublisher;
-    final private String BASE_URL = "http://chat-bot.openbudget.gov.ua";
+    private final String BASE_URL = "http://chat-bot.openbudget.gov.ua";
 
     public CheckScheduler(SubscriptionRepository repository, ApplicationEventPublisher applicationEventPublisher) {
         this.repository = repository;

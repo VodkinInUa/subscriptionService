@@ -22,7 +22,7 @@ public class SubscriptionsCheck {
     final private Subscription[] subscriptions;
     final private MultiValueMap<String,Subscription> subscriptionsMap = new LinkedMultiValueMap<>();
     private ApiRequest requestForCheck;
-    private ResponseMapper mapper;
+    private final ResponseMapper mapper;
 
 
     SubscriptionsCheck(SubscriptionRepository repository, ApplicationEventPublisher applicationEventPublisher, Class mapperClass){

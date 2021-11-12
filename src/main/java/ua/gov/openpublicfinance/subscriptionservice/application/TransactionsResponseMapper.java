@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class TransactionsResponseMapper implements ResponseMapper {
     private final Logger logger = LoggerFactory.getLogger(TransactionsResponseMapper.class);
-    private String theme;
+    private final String theme;
 
     public TransactionsResponseMapper() {
         theme = "transactions";
@@ -21,7 +21,7 @@ public class TransactionsResponseMapper implements ResponseMapper {
     public HashMap<String,String> mapFromJson (String json){
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, Object>> typeReference =
-                new TypeReference<HashMap<String, Object>>() {};
+                new TypeReference<>() {};
         Map<String, Object> data = null;
         try {
             data = mapper.readValue(json, typeReference);
