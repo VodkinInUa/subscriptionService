@@ -9,11 +9,11 @@ import ua.gov.openpublicfinance.subscriptionservice.domain.model.SubscriptionAgg
 import ua.gov.openpublicfinance.subscriptionservice.domain.model.UnsubscribeCommand;
 
 @Component
-public class SubscriptionEventService{
+public class EventService {
 
     private final SubscriptionAggregate aggregate;
 
-    public SubscriptionEventService(SubscriptionAggregate aggregate) {
+    public EventService(SubscriptionAggregate aggregate) {
         this.aggregate = aggregate;
     }
 

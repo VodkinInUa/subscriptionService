@@ -1,4 +1,4 @@
-package ua.gov.openpublicfinance.subscriptionservice.application;
+package ua.gov.openpublicfinance.subscriptionservice.application.api;
 
 import java.util.Arrays;
 

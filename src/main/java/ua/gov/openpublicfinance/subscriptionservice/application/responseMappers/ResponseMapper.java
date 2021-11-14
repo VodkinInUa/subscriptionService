@@ -1,4 +1,4 @@
-package ua.gov.openpublicfinance.subscriptionservice.application;
+package ua.gov.openpublicfinance.subscriptionservice.application.responseMappers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -9,7 +9,5 @@ import java.util.Map;
 
 public interface ResponseMapper {
 
-    public HashMap<String,String> mapFromJson (String json);
-    public String getTheme();
-
+    HashMap<String,String> mapFromJson (String json);
 }

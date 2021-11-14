@@ -1,4 +1,4 @@
-package ua.gov.openpublicfinance.subscriptionservice.application;
+package ua.gov.openpublicfinance.subscriptionservice.application.responseMappers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,11 +11,6 @@ import java.util.Map;
 
 public class DocumentsResponseMapper implements ResponseMapper{
     private final Logger logger = LoggerFactory.getLogger(DocumentsResponseMapper.class);
-    private final String theme;
-
-    public DocumentsResponseMapper() {
-        theme = "documents";
-    }
 
     @Override
     public HashMap<String,String> mapFromJson (String json){
@@ -46,8 +41,4 @@ public class DocumentsResponseMapper implements ResponseMapper{
         return responseItems;
     }
 
-    @Override
-    public String getTheme() {
-        return theme;
-    }
 }

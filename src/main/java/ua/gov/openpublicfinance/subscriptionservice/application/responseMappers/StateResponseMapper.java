@@ -1,4 +1,4 @@
-package ua.gov.openpublicfinance.subscriptionservice.application;
+package ua.gov.openpublicfinance.subscriptionservice.application.responseMappers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -9,13 +9,8 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TransactionsResponseMapper implements ResponseMapper {
-    private final Logger logger = LoggerFactory.getLogger(TransactionsResponseMapper.class);
-    private final String theme;
-
-    public TransactionsResponseMapper() {
-        theme = "transactions";
-    }
+public class StateResponseMapper implements ResponseMapper {
+    private final Logger logger = LoggerFactory.getLogger(StateResponseMapper.class);
 
     @Override
     public HashMap<String,String> mapFromJson (String json){
@@ -31,10 +26,6 @@ public class TransactionsResponseMapper implements ResponseMapper {
             //TODO process exception json desirialisation
         }
         return (HashMap<String, String>) data.get("response");
-    }
-    @Override
-    public String getTheme(){
-        return theme;
     }
 
 }
